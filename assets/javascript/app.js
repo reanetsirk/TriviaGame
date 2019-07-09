@@ -8,6 +8,13 @@ $(document).ready(function () {
     var incorrect = 0;
     var unanswered = 0;
     var timeRemaining = 30;
+    var gifArray = ["question1", "question2", "question3"],
+    var message = {
+        correct: "Correct Answer!",
+        incorrect: "Incorrect Answer!",
+        endTime: "Times Up!",
+        finished: "Your Results",
+    }
     var triviaQuestions = {
         question1 : {
             question: "Sesame Street was first aired on public braodcasting televsion on what date?",
@@ -56,6 +63,7 @@ newQuestion();
 
 }
 function newQuestion(){
+    $("#message").empty();
     $("#correct").empty();
     $("#gif").hide();
     $("#gifCaption").hide();
