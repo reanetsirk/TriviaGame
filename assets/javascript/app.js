@@ -1,7 +1,7 @@
 $('#startBtn').on('click', function () {
     game.start();
 })
-$(document).on('click','#end',function(){
+$(document).on('click', '#end', function () {
     game.done();
 });
 
@@ -49,40 +49,91 @@ var game = {
                 $("#subWrapper").append("<input type='radio' name='question-" + i + " 'value='" + triviaQuestions[i].answerList[j] + "'>" + triviaQuestions[i].answerList[j]);
             }
         }
-$('#subWrapper').append('<br><button id="end">Done</button>');
+        $('#subWrapper').append('<br><button id="end">Done</button>');
     },
     done: function () {
-        $.each($('input[name="question-0]":checked'), function () {
-            if ($(this).val() == triviaQuestions[0].correctAnswer) {
-                game.correct++;
+        var value = $("input:checked")
+
+        for(var i = 0; i < value.length; i++){
+            // get the question index from name attribute
+            // split("-") -> question-0 -> ['question', '0']
+            // ['question', '0'][1] -> '0'
+            var index = $(value[i]).attr("name").split("-")[1];
+
+            // get the value of the html element
+            var item = $(value[i]).val();
+
+            // make variable to hold current question
+            var question = triviaQuestions[parseInt(index)];
+
+            // make variable holding position of current guess
+            var guess = question.answerList.indexOf(item);
+
+            // make variable holding currect answer
+            var correct = question.correctAnswer;
+            
+            // make variable for answer text
+            var response = question.answerText;
+    
+            if(guess === correct){
+                console.log(response)
             } else {
-                game.incorrect++;
+                console.log("You got question " + name + " wrong!")
             }
-        });
-        $.each($('input[name="question-1]":checked'), function () {
-            if ($(this).val() == triviaQuestions[1].correctAnswer) {
-                game.correct++;
-            } else {
-                game.incorrect++;
-            }
-        });
-        $.each($('input[name="question-2]":checked'), function () {
-            if ($(this).val() == triviaQuestions[2].correctAnswer) {
-                game.correct++;
-            } else {
-                game.incorrect++;
-            }
-        });
+        }
+
+
+        // $.each(value, function(){
+        //     // get the question index from name attribute
+        //     var name = $(this).attr("name").split("-")[1];
+        //     // get the value of the html element
+        //     var item = $(this).val();
+        //     // make variable holding position of current guess
+        //     var guess = triviaQuestions[parseInt(name)].answerList.indexOf(item);
+        //     // make variable holding currect answer
+        //     var correct = triviaQuestions[parseInt(name)].correctAnswer;
+        //     // make variable for answer text
+        //     var response = triviaQuestions[parseInt(name)].answerText;
+
+        //     if(guess === correct){
+        //         console.log(response)
+        //     } else {
+        //         console.log("You got question " + name + " wrong!")
+        //     }
+        // })
+
+
+        // $.each($('input[name="question-0]":checked'), function () {
+        //     if ($(this).val() == triviaQuestions[0].correctAnswer) {
+        //         game.correct++;
+        //     } else {
+        //         game.incorrect++;
+        //     }
+        // });
+        // $.each($('input[name="question-1]":checked'), function () {
+        //     if ($(this).val() == triviaQuestions[1].correctAnswer) {
+        //         game.correct++;
+        //     } else {
+        //         game.incorrect++;
+        //     }
+        // });
+        // $.each($('input[name="question-2]":checked'), function () {
+        //     if ($(this).val() == triviaQuestions[2].correctAnswer) {
+        //         game.correct++;
+        //     } else {
+        //         game.incorrect++;
+        //     }
+        // });
         this.result();
     },
-    result: function(){
+    result: function () {
         clearInterval(timer);
         $('#subWrapper h2').remove();
 
         $('#subWrapper').html("<h2>All Finished</h2>");
-        $('#subWrapper').append("<h3>Correct:"+this.correct+"</h3>");
-        $('#subWrapper').append("<h3>Incorrect:"+this.incorrect+"</h3>");
-        $('#subWrapper').append("<h3>Unanswered:"+triviaQuestions.length-(this.incorrect +this.correct ))+ "</h3>");
+        $('#subWrapper').append("<h3>Correct:" + this.correct + "</h3>");
+        $('#subWrapper').append("<h3>Incorrect:" + this.incorrect + "</h3>");
+        $('#subWrapper').append("<h3>Unanswered:" + triviaQuestions.length - (this.incorrect + this.correct) + "</h3>");
     }
 }
 // ...........................
