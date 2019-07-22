@@ -1,5 +1,6 @@
 $('#startBtn').on('click', function () {
-    game.start();
+    game.start()
+    console.log ("start*****");
 })
 $(document).on('click', '#end', function () {
     game.done();
@@ -31,7 +32,8 @@ var game = {
     incorrect: 0,
     counter: 120,
     countdown: function () {
-        game.counter;
+        game.counter
+        console.log ("countdown------------------------" + game.counter);
         $('#counter').html(game.counter);
         if (game.counter <= 0) {
             console.log("Your time is up");
@@ -71,7 +73,7 @@ var game = {
 
             // make variable holding currect answer
             var correct = question.correctAnswer;
-            
+
             // make variable for answer text
             var response = question.answerText;
     
@@ -133,8 +135,13 @@ var game = {
         $('#subWrapper').html("<h2>All Finished</h2>");
         $('#subWrapper').append("<h3>Correct:" + this.correct + "</h3>");
         $('#subWrapper').append("<h3>Incorrect:" + this.incorrect + "</h3>");
-        $('#subWrapper').append("<h3>Unanswered:" + triviaQuestions.length - (this.incorrect + this.correct) + "</h3>");
+        $('#subWrapper').append("<h3>Unanswered:" + triviaQuestions.length - ((this.incorrect + this.correct)) + "</h3>");
+        console.log("triviaQuestions.length=" + triviaQuestions.length);
+        console.log("this.correct="  + this.correct);
+        console.log("this.incorrect="  + this.incorrect);
     }
+
+    
 }
 // ...........................
 
